@@ -24,27 +24,27 @@
 
 # App.js
 
-        import { useEffect, useState } from 'react';
+    import { useEffect, useState } from 'react';
 
-        export default function App({connector}) {
+    export default function App({connector}) {
 
-            const [status, setStatus] = useState('empty');
-            const [error, setError] = useState(null);
-            const [item, setItem] = useState(null);
+        const [status, setStatus] = useState('empty');
+        const [error, setError] = useState(null);
+        const [item, setItem] = useState(null);
 
-            // Load Manifest
+        // Load Manifest
 
-            useEffect(() => {
-                connector.start()
-                .then(() => {
-                init();
-                })
-                .catch(e => setError(e.message));
-            }, [connector]);
+        useEffect(() => {
+            connector.start()
+            .then(() => {
+            init();
+            })
+            .catch(e => setError(e.message));
+        }, [connector]);
 
-            // Load or init date
+        // Load or init date
 
-            function init() {
+        function init() {
 
-            }
-        }  
+        }
+    }  
