@@ -36,9 +36,7 @@
 
         useEffect(() => {
             connector.start()
-            .then(() => {
-            init();
-            })
+            .then(() => init())
             .catch(e => setError(e.message));
         }, [connector]);
 
