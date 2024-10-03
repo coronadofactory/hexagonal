@@ -2,7 +2,7 @@ Open Source Initiative OSI - The MIT License
 
 http://www.opensource.org/licenses/mit-license.php
 
-Copyright (c) 2011-2024 Jose Antonio Garcia
+Copyright (c) 2011-2024 Jose Garcia
 .
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

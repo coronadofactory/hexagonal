@@ -1,7 +1,7 @@
 /*!
- * Backend Element
+ * Backend Fetch
  * 
- * Copyright (c) 1984-2024 Jose Antonio Garcia
+ * Copyright (c) 1984-2024 Jose Garcia
  * Released under the MIT license
  * https://raw.githubusercontent.com/coronadofactory/hexagonal/refs/heads/main/LICENSE.txt
  *
