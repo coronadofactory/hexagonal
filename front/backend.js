@@ -8,7 +8,7 @@
  * Date: 2024-10-03
  */
 
-export function Appia(wire, service, body, headers, error, delayPromise, DELAY) {
+export function AppiaBackend(wire, service, body, headers, error, delayPromise, DELAY) {
 
     const promise = new Promise((resolve, reject) => {
       fetch(wire+service.url, options(service.method, body, headers))
