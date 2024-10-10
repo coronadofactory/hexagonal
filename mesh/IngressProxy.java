@@ -14,7 +14,7 @@ import com.coronadofactory.cqrs.queries.ProxyException;
 
 public interface IngressProxy {
 
-	public Object handler(String service, Object event, Object context) throws ProxyException;
+	public Object handler(String service, byte[] event, Object context) throws ProxyException;
 
 
 }
