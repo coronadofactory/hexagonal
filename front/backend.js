@@ -23,13 +23,13 @@ export function AppiaBackend(wire, service, body, headers, error, delayPromise, 
                 reject(new Error(error('e500'), { cause: e }));
               }
           } else {
-              if (response.status==401) {
+              if (response.status===401) {
                 reject(new Error('401', { cause: response }));
-              } else if (response.status==406) {
+              } else if (response.status===406) {
                 reject(new Error(error('e406'), { cause: response }));
-              } else if (response.status==408) {  
+              } else if (response.status===408) {  
                   reject(new Error(error('e408'), { cause: response }));
-              } else   if (response.status==408) {
+              } else   if (response.status===408) {
                 console.error(error('e408'));
                 reject(new Error(error('e408'), { cause: response }));
               } else if (response.status>=502 && response.status<=504) {
