@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Installer
+# cf web Installer
 # 
 # Copyright (c) 1984-2024 Jose Garcia
 # Released under the MIT license
@@ -17,10 +17,16 @@ public="public"
 module=$1
 
 if [ ! -d "node_modules" ]; then
-      echo "https://create-react-app.dev"
 
-      echo "In main dir"
-      echo "npx create-react-app my-app"
+      pwd=`pwd`
+      pwd="`basename $pwd`"
+
+      echo "In parent dir"
+      echo "npx create-react-app $pwd"
+
+      echo ""
+      echo "More info in:"
+      echo "https://create-react-app.dev"
 
       exit
 fi
