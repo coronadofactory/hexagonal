@@ -10,7 +10,7 @@
 
 const bearerName = "X-Appia-Bearer";
 const languageName = 'X-Appia-Language';
-const manifestService = "manifest";
+const manifestService = "api/manifest";
 const loginService = "login";
 const COOKIE_EXPIRATION = (1*24*60*60*1000);
 const GENERIC_ERROR = 'Un error ha ocurrido en el sistema.  Hable con el administrador';
@@ -40,7 +40,7 @@ export function AppiaConnector(context, bearerValue, ERRORS, backend, DELAY) {
       const THIS = this;
 
       return new Promise((resolve,reject) => {
-        THIS.fetch(manifestService)
+        THIS.fetch(manifestService, {headers:{"Content-Type": "application/json; charset=utf-8"}})
         .then(data => {
           user=data.user
           rest=data.rest

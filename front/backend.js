@@ -55,7 +55,7 @@ export function AppiaBackend(wire, service, body, headers, error, delayPromise, 
   
     var options = {
       method: method,
-      headers: { "Content-Type": "application/json; charset=utf-8" }
+      headers: body.headers
     }
   
     if (headers.bearer && headers.bearer.value) {
@@ -66,8 +66,8 @@ export function AppiaBackend(wire, service, body, headers, error, delayPromise, 
       options.headers[headers.language.name]=headers.language.value;
     }
   
-    if (body && method==="POST") {
-      options.body=JSON.stringify(body);
+    if (body && body.body && method==="POST") {
+      options.body=body.body;
     }
   
     return options;

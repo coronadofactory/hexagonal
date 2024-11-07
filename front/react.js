@@ -1,8 +1,11 @@
 /*!
  * React Starter
  * 
- * PONGA AQUI SUS DATOS
- * 
+ * Copyright (c) 1984-2024 Jose Garcia
+ * Released under the MIT license
+ * https://raw.githubusercontent.com/coronadofactory/hexagonal/refs/heads/main/LICENSE.txt
+ *
+ * Date: 2024-10-03
  */
 
 import React from "react";
@@ -14,7 +17,7 @@ import App from "../app/App";
 export function start(AppiaBackend, ERRORS, root, context, bearer) {
 
   createRoot(root).render(
-    <App connector={new AppiaConnector(context, bearer, ERRORS, AppiaBackend, DELAY)}/>
+    <App connector={new AppiaConnector(context, bearer, ERRORS, AppiaBackend, DELAY)} document={context.document}/>
   );
 
 }

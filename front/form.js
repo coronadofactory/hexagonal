@@ -84,8 +84,41 @@ function validate(form, Validator) {
 
 function serialize(form) {
 
-  const inputs = form.querySelectorAll("input[type=text],input[type=hidden],select");
+  const files = form.querySelectorAll("input[type=file]");
+  return files.length===0?serializeJSON(form):serializeFile(form, files)
+
+}
+
+function serializeJSON(form) {
+
+  return {headers:{"Content-Type": "application/json; charset=utf-8"}, body:serializeObject(form)}
+
+}
+
+function serializeFile(form, files) {
+
+  const file = files[0].files[0];
+
+  if (!file) {
+      alert("Please select a file.");
+      return;
+  }
+
+  const formData = new FormData();
+  formData.append("body", btoa(encodeURI(serializeObject(form))));
+  formData.append("upl", file);
+
+  // Leave in blank to avoid
+  // org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found
+  return {headers:{}, body:formData}
+
+}
+
+function serializeObject(form) {
+
+  const inputs = form.querySelectorAll("input[type=text],input[type=hidden],input[type=email],input[type=password],select");
   const checkboxs = form.querySelectorAll("input[type=checkbox]:checked");
+
   var json = {};
 
   for (const item of inputs) {
@@ -96,6 +129,6 @@ function serialize(form) {
     json[item.name]=item.value.trim();
   }
 
-  return json;
+  return JSON.stringify(json);
 
 }

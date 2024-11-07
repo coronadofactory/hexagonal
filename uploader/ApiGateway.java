@@ -22,13 +22,30 @@ public class APIGateway {
 	}
 
 	// Multipart ingress
-
 	@RequestMapping(value = "/apigateway/{app}/file/{service}", method = RequestMethod.POST)
 	public ResponseEntity<String> file(@PathVariable("app") String app, @PathVariable("service") String service, @RequestParam("body") String body, @RequestParam("upl") MultipartFile file, HttpServletRequest http, HttpServletResponse httpResponse) {
+
+		byte[] decodedByte = Base64.getDecoder().decode(body.replaceAll(" ","+"));
+		
+		String decodedString1;
 		try {
-			API api = apiServer.getAPIFile(http, app, file);
-			api.init(http, getUriFile(app, label, service));
-			Object response = api.invoke(service, body.getBytes());
+			decodedString1 = new String(decodedByte, "UTF-8");
+		} catch (Exception e) {
+			return throwError(new FrontException(e));
+		}
+
+		String decodedString2;
+		try {
+			decodedString2 = java.net.URLDecoder.decode(decodedString1, StandardCharsets.UTF_8.name());
+		} catch (Exception e) {
+			return throwError(new FrontException(e));
+		}
+		
+		try {
+			API api = apiServer.getAPIFile(http, app);
+			api.init(http, getUriFile(app, service, http));
+			((APIGatewayFile)api).setMultipartFile(upl);
+			Object response = api.invoke(service, decodedString2.getBytes());
 			api.dispatch(response, httpResponse);
 		} catch (FrontException e) {
 			return throwError(e);
