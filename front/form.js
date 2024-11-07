@@ -85,13 +85,19 @@ function validate(form, Validator) {
 function serialize(form) {
 
   const files = form.querySelectorAll("input[type=file]");
-  return files.length===0?serializeJSON(form):serializeFile(form, files)
+  return files.length===0?serializeForm(form):serializeFile(form, files)
 
 }
 
-function serializeJSON(form) {
+function serializeForm(form) {
 
   return {headers:{"Content-Type": "application/json; charset=utf-8"}, body:serializeObject(form)}
+
+}
+
+export function serializeJSON(form) {
+
+  return {headers:{"Content-Type": "application/json; charset=utf-8"}, body:JSON.stringify(form)}
 
 }
 
