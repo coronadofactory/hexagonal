@@ -64,6 +64,19 @@ export function AppiaConnector(context, bearerValue, ERRORS, backend, DELAY) {
 
     },
 
+    url:function(service, id) {
+
+      var serviceMethod = serviceMediator(service, rest);
+      if (!serviceMethod) {
+        return new Promise((resolve,reject) => reject(errorMessage('e400', null, messages, ERRORS)));
+      }
+
+      serviceMethod = {url:serviceMethod.url+"/"+bearerValue+"/"+languageValue+"/"+id,method:serviceMethod.url};
+
+      return backend(wire, serviceMethod, request, {bearer:bearer, language:language}, function(code){return errorBackend(code,ERRORS)}, delayPromise, DELAY);
+
+    },
+
     setBearer:function(value) {
       setCookie(bearerName,value);
     },
