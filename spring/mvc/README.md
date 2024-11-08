@@ -1,10 +1,11 @@
 # Spring instalation
 
 1. Crear proyecto MVC
-2. Modificar web.xml para que apunte a WEB-INF/spring/appServlet/servlet-context.xml
-3. Crear servlet-context.xml
-4. Ejecutar Maven Install (para depurar errores del web.xml)
-5. Crear la configuración del API Gateway (mycontainer-gateway-context.xml) 
+2. Configuracion del pom.xml
+3. Modificar web.xml para que apunte a WEB-INF/spring/appServlet/servlet-context.xml
+4. Crear servlet-context.xml
+5. Ejecutar Maven Install (para depurar errores del web.xml)
+6. Crear la configuración del API Gateway (mycontainer-gateway-context.xml) 
 
 Referencias:
 
