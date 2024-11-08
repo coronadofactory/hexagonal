@@ -20,7 +20,10 @@
 				<beans:entry key="service1" value-ref="service1"/>
 				<beans:entry key="service2" value-ref="service2"/>
 			</beans:map>
-    	</beans:property>
-    </beans:bean>
+    		</beans:property>
+	</beans:bean>
+
+	<!-- Velocity classpath loader -->
+	<beans:import resource="classpath*:META-INF/spring/velocity-classpath-context.xml"/>
 
 </beans:beans>   
