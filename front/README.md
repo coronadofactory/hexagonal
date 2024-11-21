@@ -62,5 +62,6 @@
         }
     } 
 
+# For Deploy app
 
     "build": "react-scripts build && mv build/static/js/main*.js build/static/js/main-production.js",
