@@ -5,13 +5,13 @@
 
         cf install react
 
-2. For install form modules
+2. For install form module:
 
         cf install form
 
 3. For install proxy module:
 
-        cf install form
+        cf install proxy
 
 # index.js
 
