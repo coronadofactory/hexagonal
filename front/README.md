@@ -1,6 +1,17 @@
 
+# Installation
 
+1. For install react use:
 
+        cf install react
+
+2. For install form modules
+
+        cf install form
+
+3. For install proxy module:
+
+        cf install form
 
 # index.js
 
