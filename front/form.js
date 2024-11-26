@@ -103,16 +103,22 @@ export function serializeJSON(form) {
 
 function serializeFile(form, files) {
 
-  const file = files[0].files[0];
-
-  if (!file) {
+  if (files.length==0 || !files[0].files[0]) {
       alert("Please select a file.");
       return;
   }
 
   const formData = new FormData();
   formData.append("body", btoa(encodeURI(serializeObject(form))));
-  formData.append("upl", file);
+  if (files.length==1) {
+    const file = files[0].files[0];
+    formData.append("upl", file);
+  } else {
+    var index=1;
+    for (const file of files) {
+      formData.append("upl"+(index++), file.files[0]);
+    }
+  }
 
   // Leave in blank to avoid
   // org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found
