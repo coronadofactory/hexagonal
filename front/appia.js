@@ -68,12 +68,10 @@ export function AppiaConnector(context, bearerValue, ERRORS, backend, DELAY) {
 
       var serviceMethod = serviceMediator(service, rest);
       if (!serviceMethod) {
-        return new Promise((resolve,reject) => reject(errorMessage('e400', null, messages, ERRORS)));
+        return '404';
       }
 
-      serviceMethod = {url:serviceMethod.url+"/"+bearerValue+"/"+languageValue+"/"+id,method:serviceMethod.url};
-
-      return backend(wire, serviceMethod, request, {bearer:bearer, language:language}, function(code){return errorBackend(code,ERRORS)}, delayPromise, DELAY);
+      return serviceMethod.url+"/"+getCookie(bearerValue)+"/"+languageValue+"/"+id;
 
     },
 
@@ -168,7 +166,6 @@ function errorBackend(code,ERRORS) {
 function errorMessage(code, e, messages, ERRORS) {
 
   if (code && messages && messages[code]) {
-    console.log('1');
     return messages[code];
   } else if (code && ERRORS && ERRORS[code]) {
     return ERRORS[code];
