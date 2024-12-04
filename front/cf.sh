@@ -8,14 +8,12 @@
 #
 # Date: 2024-10-03
 #
-
 git="https://raw.githubusercontent.com/coronadofactory/hexagonal/refs/heads/main/front"
 src="src"
 infrastructure="src/infrastructure"
 public="public"
 
 module=$1
-
 
 if [ ! -d "node_modules" ]; then
 
@@ -37,10 +35,11 @@ if [ ! -d "node_modules" ]; then
       re="(webpack)"
       if [[ $module =~ $re ]]; then
 
-            read -p "Please confirm to install in production: (y/n)? " opt
-            if [ "$opt" != "y" ]; then
-                  exit
-            fi
+
+#            read -p "Please confirm to install in production: (y/n)? " opt
+#            if [ "$opt" != "y" ]; then
+#                  exit
+#            fi
 
             npm init -y
             npm install webpack webpack-cli --save-dev
