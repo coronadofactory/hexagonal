@@ -16,19 +16,44 @@ public="public"
 
 module=$1
 
+
+
+
 if [ ! -d "node_modules" ]; then
 
-      pwd=`pwd`
-      pwd="`basename $pwd`"
+      re="(react)"
+      if [[ $module =~ $re ]]; then
 
-      echo "In parent dir"
-      echo "npx create-react-app $pwd"
+            pwd=`pwd`
+            pwd="`basename $pwd`"
 
-      echo ""
-      echo "More info in:"
-      echo "https://create-react-app.dev"
+            echo "In parent dir"
+            echo "npx create-react-app $pwd"
 
-      exit
+            echo ""
+            echo "More info in:"
+            echo "https://create-react-app.dev"
+
+            exit
+      fi
+
+      re="(webpack)"
+      if [[ $module =~ $re ]]; then
+
+            read -p "Is `pwd` your directory to install? " opt
+            if [ "$opt" != "y" ]; then
+                  exit
+            fi
+
+            npm init -y
+            npm install webpack webpack-cli --save-dev
+            mkdir src
+            mkdir public
+            npm install --save-dev html-webpack-plugin
+            exit
+
+      fi
+
 fi
 
 if [ ! -d "$infrastructure" ]; then
