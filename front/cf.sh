@@ -35,16 +35,10 @@ if [ ! -d "node_modules" ]; then
       re="(webpack)"
       if [[ $module =~ $re ]]; then
 
-
-#            read -p "Please confirm to install in production: (y/n)? " opt
-#            if [ "$opt" != "y" ]; then
-#                  exit
-#            fi
-
             npm init -y
             npm install webpack webpack-cli --save-dev
-            mkdir src
-            mkdir public
+            mkdir -p src
+            mkdir -p public
             npm install --save-dev html-webpack-plugin
 
       fi
