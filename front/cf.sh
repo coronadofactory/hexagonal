@@ -17,8 +17,6 @@ public="public"
 module=$1
 
 
-
-
 if [ ! -d "node_modules" ]; then
 
       re="(react)"
@@ -34,13 +32,12 @@ if [ ! -d "node_modules" ]; then
             echo "More info in:"
             echo "https://create-react-app.dev"
 
-            exit
       fi
 
       re="(webpack)"
       if [[ $module =~ $re ]]; then
 
-            read -p "Is `pwd` your directory to install? " opt
+            read -p "Please confirm to install in production: (y/n)? " opt
             if [ "$opt" != "y" ]; then
                   exit
             fi
@@ -50,9 +47,10 @@ if [ ! -d "node_modules" ]; then
             mkdir src
             mkdir public
             npm install --save-dev html-webpack-plugin
-            exit
 
       fi
+
+      exit
 
 fi
 
