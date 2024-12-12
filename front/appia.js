@@ -82,7 +82,7 @@ export function AppiaConnector(context, bearerValue, ERRORS, backend, DELAY) {
 
     },
 
-    id:function() {
+    id:function(id) {
 
       return JSON.parse(decodeURI(atob(id)));
 
