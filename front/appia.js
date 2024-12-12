@@ -64,14 +64,27 @@ export function AppiaConnector(context, bearerValue, ERRORS, backend, DELAY) {
 
     },
 
-    url:function(service, id) {
+    url:function(service, idRaw) {
 
       var serviceMethod = serviceMediator(service, rest);
       if (!serviceMethod) {
         return '404';
       }
 
+      var id;
+      if (typeof idRaw === 'string') {
+        id = idRaw;
+      } else {
+        id = btoa(encodeURI(JSON.stringify(idRaw)));
+      }
+
       return serviceMethod.url+"/"+getCookie(bearerValue)+"/"+languageValue+"/"+id;
+
+    },
+
+    id:function() {
+
+      return JSON.parse(decodeURI(atob(id)));
 
     },
 
