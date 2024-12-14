@@ -26,6 +26,7 @@ the future will be ready for Framework 7.
     const root = document.getElementById("root");
     const wire = document.querySelectorAll("[data-wire]")[0].getAttribute("data-wire");
     const language = document.querySelectorAll("[data-language]")[0].getAttribute("data-language");
+    const id = JSON.parse(decodeURI(atob(document.querySelectorAll("[data-id]")[0].getAttribute("data-id"))));
 
     start(
         AppiaBackend,
