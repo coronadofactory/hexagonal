@@ -1,7 +1,7 @@
 
 # Installation
 
-First of tou must install the technology you want to use. Right now os oly available for react.
+First of all, you must install the technology you want to use. Right now os oly available for react.
 the future will be ready for Framework 7.
 
 1. For install react use:
