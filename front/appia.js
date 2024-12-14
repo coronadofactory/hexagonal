@@ -68,7 +68,7 @@ export function AppiaConnector(context, bearerValue, ERRORS, backend, DELAY) {
 
       var serviceMethod = serviceMediator(service, rest);
       if (!serviceMethod) {
-        return alert(errorMessage('e400', null, messages, ERRORS);
+        return alert(errorMessage('e400', null, messages, ERRORS));
       }
 
       return serviceMethod.url+"/"+languageValue+"/"+btoa(encodeURI(JSON.stringify(id)));
