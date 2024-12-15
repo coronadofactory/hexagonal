@@ -24,9 +24,9 @@ the future will be ready for Framework 7.
     // Appia 001. Bad request. En desarrollo [cliente]
 
     const root = document.getElementById("root");
-    const wire = document.querySelectorAll("[data-wire]")[0].getAttribute("data-wire");
-    const language = document.querySelectorAll("[data-language]")[0].getAttribute("data-language");
-    const id = JSON.parse(decodeURI(atob(document.querySelectorAll("[data-id]")[0].getAttribute("data-id"))));
+    const wire = document.querySelector("[data-wire]").getAttribute("data-wire");
+    const language = document.querySelector("[data-language]").getAttribute("data-language");
+    const id = JSON.parse(atob(decodeURIComponent(document.querySelector("[data-id]").getAttribute("data-id"))));
 
     start(
         AppiaBackend,

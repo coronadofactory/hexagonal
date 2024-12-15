@@ -71,10 +71,10 @@ export function AppiaConnector(context, bearerValue, ERRORS, backend, DELAY) {
         return alert(errorMessage('e400', null, messages, ERRORS));
       }
 
-      return serviceMethod.url+"/"+languageValue+"/"+btoa(encodeURI(JSON.stringify(id)));
+      return serviceMethod.url+"/"+languageValue+"/"+encodeURIComponent(btoa(JSON.stringify(id)));
 
     },
-
+    
     setBearer:function(value) {
       setCookie(bearerName,value);
     },
