@@ -1,4 +1,4 @@
-# Spring instalation
+# Spring installation
 
 1. Crear proyecto MVC
 2. Configuracion del pom.xml
