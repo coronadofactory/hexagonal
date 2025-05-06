@@ -30,7 +30,7 @@
 
 <br>
 
-## Login
+## Formulario de Login
 
 ```javascript
 
@@ -41,17 +41,13 @@
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     const credentials = Object.fromEntries(new FormData(e.currentTarget));
-
     login(credentials, isSubmitting, setError, redirect)
 
   };
 
   const redirect = async (e) => {
-
     alert('Listo para reenviar');
-
   };
 
 ```
