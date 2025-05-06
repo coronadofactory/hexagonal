@@ -43,7 +43,7 @@ async function fetchData(service, request, method) {
   setBearer(headers);
   
   // URL & body
-  var url, body;
+  var url, body = null;
 
   // URL for get
   if (method=='GET') {
