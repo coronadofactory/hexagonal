@@ -20,12 +20,41 @@
     NEXT_PUBLIC_BEARER=X-Appia-Bearer
     NEXT_PUBLIC_COOKIE=X-Appia-Cookie
 
+    # Signup, login & logout URL
+    NEXT_PUBLIC_SIGNUP_URL=http://...../signup
+    NEXT_PUBLIC_LOGIN_URL=http://...../login
+    NEXT_PUBLIC_LOGOUT_URL=http://...../logout
+
     # Delay in fetch
     NEXT_PUBLIC_DELAY=1500
 
-
-
 <br>
+
+## Login
+
+```javascript
+
+  import { login } from "./auth";
+
+  const [isSubmitting, setSubmitting] = useState(true);
+  const [error, setError] = useState(null);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const credentials = Object.fromEntries(new FormData(e.currentTarget));
+
+    login(credentials, isSubmitting, setError, redirect)
+
+  };
+
+  const redirect = async (e) => {
+
+    alert('Listo para reenviar');
+
+  };
+
+```
 
 ## Proxy
 

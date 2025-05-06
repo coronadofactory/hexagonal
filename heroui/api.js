@@ -9,47 +9,59 @@
 */
 
 const baseURL = process.env.NEXT_PUBLIC_API;
-const bearerName = process.env.NEXT_PUBLIC_BEARER;
-const cookieName = process.env.NEXT_PUBLIC_COOKIE;
 const DELAY = process.env.NEXT_PUBLIC_DELAY;
+
+const cookieName = process.env.NEXT_PUBLIC_COOKIE;
+const bearerName = process.env.NEXT_PUBLIC_BEARER;
+
+import { setBearer } from "./auth";
 
 export function query(service, request, setData, setIsLoading, setError) {
   setIsLoading(true);
   setError(null);
-  getDataFromServer(service, request)
-    .then((contents) => setData(createResponse(contents)))
-    .catch((error) => setError(createError(error)))
+  fetchData(service, request, 'POST')
+    .then((response) => setData({success:true, content:response}))
+    .catch((error) => setError((error.cause && error.cause==401)?{login:true}:{error:error}))
     .finally(() => setIsLoading(false));
 }
 
-async function getDataFromServer(service, request, method) {
+export function command(service, request, setData, setIsLoading, setError) {
+  setIsLoading(true);
+  setError(null);
+  fetchData(service, request, 'POST')
+    .then((response) => setData({success:true, status:response.status, message:response.message}))
+    .catch((error) => setError((error.cause && error.cause==401)?{needsLogin:true}:{hasError:error}))
+    .finally(() => setIsLoading(false));
+}
 
-  // URL Builder
-  const endpoint = `${baseURL}/${service}`;
+async function fetchData(service, request, method) {
 
-  // Options
-  var options = {
-    method:method?method:'POST',
-    headers:{
+  var headers = {
       'Content-Type': 'application/json',
-    }
   }
 
-  // Final URL
-  var url = endpoint;
+  // Bearer
+  setBearer(headers);
+  
+  // URL & body
+  var url, body;
 
   // URL for get
   if (method=='GET') {
     const queryParams = new URLSearchParams(request);
-    url = `${endpoint}?${queryParams.toString()}`;
-  }
+    url = `${baseURL}/${service}?${queryParams.toString()}`;
+  } else {
+    url = `${baseURL}/${service}`;
+    body = JSON.stringify(request);
+  } 
 
-  // Bearer
-  const bearerValue = getCookie(cookieName);
-  if (bearerValue) {
-    options.headers[bearerName]=bearerValue;
+  // Options
+  const options = {
+    method:method?method:'POST',
+    headers:headers,
+    body:body
   }
-
+  
   // Promise del fetch
   const promise = new Promise((resolve, reject) => {
     fetch(url, options)
@@ -71,27 +83,10 @@ async function getDataFromServer(service, request, method) {
     return delayPromise(promise, DELAY);
 }
 
-// Obtencion de la cookie
-function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) === 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return null;
-
-}
-
 // Delay
 async function delayPromise(p1, DELAY) {
  
-  var p2 = new Promise((resolve) => {
+  const p2 = new Promise((resolve) => {
     setTimeout(resolve, DELAY);
   });
 
@@ -103,16 +98,27 @@ async function delayPromise(p1, DELAY) {
  
 }
 
-function createResponse(contents) {
-  return {success:true, contents:contents}
+// setBearer
+function setBearer(headers) {
+  const bearerValue = getCookie();
+  if (bearerValue) {
+    headers[bearerName]=`Bearer ${bearerValue}`;
+  }
 }
 
-function createError(error) {
-
-  if (error.cause && error.cause==401) {
-    return {login:true};
+// Obtencion de la cookie
+function getCookie() {
+  let name = cookieName + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
   }
+  return null;
 
-  return {error:error};
-  
 }
