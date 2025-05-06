@@ -10,32 +10,33 @@
 
 'use client'
 
+// Constantes definidas en .env.local
 const signupURL = process.env.NEXT_PUBLIC_SIGNUP_URL;
 const loginURL = process.env.NEXT_PUBLIC_LOGIN_URL;
 const logoutURL = process.env.NEXT_PUBLIC_LOGOUT_URL;
 
 const cookieName = process.env.NEXT_PUBLIC_COOKIE;
 
+// Importamos el command del acceso al API
 import { command } from "./api";
 
-// Signup && Login
-
+// Signup
 export function signup(credentials, setIsLoading, setError, redirect) {
-
   return auth(signupURL, credentials, setIsLoading, setError, redirect);
-
 }
 
+// Login
 export function login(credentials, setIsLoading, setError) {
-
   return auth(loginURL, credentials, setIsLoading, setError, redirect);
-
 }
 
+// La autorización de signup es la misma. La diferencia es que el usuario se crea con signup
+// Este servicio devuelve el token a guardar en la cookie, para invocarlo en todas las llamadas
 function auth(url, credentials, setIsLoading, setError, redirect) {
 
   const setData = function(data) {
-    setCookie(data.message.token);
+    const token = data.message.token;
+    setCookie(token);
     redirect();
   }
   
@@ -52,11 +53,8 @@ function setCookie(cvalue) {
 
 // Logout
 export function logout(redirect) {
-
   deleteCookie();
-
   command(logoutURL, {}, redirect, function(){}, function(){});
-
 }
 
 function deleteCookie() {

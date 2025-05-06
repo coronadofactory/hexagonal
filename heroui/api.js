@@ -8,13 +8,12 @@
  * Date: 2025-04-26
 */
 
+// Constantes definidas en .env.local
 const baseURL = process.env.NEXT_PUBLIC_API;
 const DELAY = process.env.NEXT_PUBLIC_DELAY;
 
 const cookieName = process.env.NEXT_PUBLIC_COOKIE;
 const bearerName = process.env.NEXT_PUBLIC_BEARER;
-
-import { setBearer } from "./auth";
 
 export function query(service, request, setData, setIsLoading, setError) {
   setIsLoading(true);
