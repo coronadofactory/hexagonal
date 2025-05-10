@@ -21,22 +21,24 @@ const cookieName = process.env.NEXT_PUBLIC_COOKIE;
 import { command } from "./api";
 
 // Signup
-export function signup(credentials, setIsLoading, setError, redirect) {
-  return auth(signupURL, credentials, setIsLoading, setError, redirect);
+export function signup(credentials, setUser, setIsLoading, setError, redirect) {
+  return auth(signupURL, credentials, setUser, setIsLoading, setError, redirect);
 }
 
 // Login
-export function login(credentials, setIsLoading, setError) {
-  return auth(loginURL, credentials, setIsLoading, setError, redirect);
+export function login(credentials, setUser, setIsLoading, setError) {
+  return auth(loginURL, credentials, setUser, setIsLoading, setError, redirect);
 }
 
 // La autorización de signup es la misma. La diferencia es que el usuario se crea con signup
 // Este servicio devuelve el token a guardar en la cookie, para invocarlo en todas las llamadas
-function auth(url, credentials, setIsLoading, setError, redirect) {
+function auth(url, credentials, setUser, setIsLoading, setError, redirect) {
 
   const setData = function(data) {
+    const user = data.message.user;
     const token = data.message.token;
     setCookie(token);
+    setUser(user);
     redirect();
   }
   

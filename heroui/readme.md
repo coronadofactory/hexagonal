@@ -35,6 +35,7 @@
 ```javascript
 
   import { login } from "./auth";
+  const { setUser } = useGlobal();
 
   const [isSubmitting, setSubmitting] = useState(true);
   const [error, setError] = useState(null);
@@ -42,7 +43,7 @@
   const onSubmit = async (e) => {
     e.preventDefault();
     const credentials = Object.fromEntries(new FormData(e.currentTarget));
-    login(credentials, isSubmitting, setError, redirect)
+    login(credentials, setUser, isSubmitting, setError, redirect)
 
   };
 
