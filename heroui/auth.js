@@ -32,6 +32,7 @@ export function login(credentials, setUser, setIsLoading, setError) {
 
 // La autorización de signup es la misma. La diferencia es que el usuario se crea con signup
 // Este servicio devuelve el token a guardar en la cookie, para invocarlo en todas las llamadas
+// Ademas devuelve el usuario por si se quiere guardar en variables globales para el avatar
 function auth(url, credentials, setUser, setIsLoading, setError, redirect) {
 
   const setData = function(data) {
@@ -54,8 +55,9 @@ function setCookie(cvalue) {
 }
 
 // Logout
-export function logout(redirect) {
+export function logout(setUser, redirect) {
   deleteCookie();
+  setUser(null);
   command(logoutURL, {}, redirect, function(){}, function(){});
 }
 

@@ -22,7 +22,7 @@ export interface ProvidersProps {
 }
 
 export function Providers({ children, themeProps }: ProvidersProps) {
-  const [user, setUser] = React.useState<string | null>("guest");
+  const [user, setUser] = React.useState<string | null>(null);
   const router = useRouter();
 
   // Value to be provided by the Context
