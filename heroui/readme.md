@@ -18,7 +18,8 @@
 
     # Bearer and cookie
     NEXT_PUBLIC_BEARER=X-Appia-Bearer
-    NEXT_PUBLIC_COOKIE=X-Appia-Cookie
+    NEXT_PUBLIC_COOKIE_TOKEN=X-Appia-Token
+    NEXT_PUBLIC_COOKIE_USER=X-Appia-User
 
     # Signup, login & logout URL
     NEXT_PUBLIC_SIGNUP_URL=http://...../signup
@@ -51,6 +52,42 @@
     alert('Listo para reenviar');
   };
 
+```
+
+
+## Provider definition for user global
+
+```javascript
+export function Providers({ children, themeProps }: ProvidersProps) {
+  const [user, setUser] = React.useState<string | null>(null);
+  const router = useRouter();
+
+  // Value to be provided by the Context
+  const globalContextValue: GlobalContextType = {
+    user,
+    setUser,
+  };
+
+  return (
+    <GlobalContext.Provider value={globalContextValue}>
+      <HeroUIProvider navigate={router.push}>
+        <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+      </HeroUIProvider>
+    </GlobalContext.Provider>
+  );
+}
+```
+
+## useGlobal definition
+
+```javascript
+export const useGlobal = () => {
+  const context = React.useContext(GlobalContext);
+  if (!context) {
+    throw new Error("useGlobal must be used within a Providers component");
+  }
+  return context;
+};
 ```
 
 ## Proxy
