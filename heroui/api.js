@@ -12,7 +12,7 @@
 const baseURL = process.env.NEXT_PUBLIC_API;
 const DELAY = process.env.NEXT_PUBLIC_DELAY;
 
-const cookieName = process.env.NEXT_PUBLIC_COOKIE;
+const cookieToken = process.env.NEXT_PUBLIC_COOKIE_TOKEN;
 const bearerName = process.env.NEXT_PUBLIC_BEARER;
 
 export function query(service, request, setData, setIsLoading, setError) {
@@ -99,7 +99,7 @@ async function delayPromise(p1, DELAY) {
 
 // setBearer
 function setBearer(headers) {
-  const bearerValue = getCookie();
+  const bearerValue = getCookie(cookieToken);
   if (bearerValue) {
     headers[bearerName]=`Bearer ${bearerValue}`;
   }

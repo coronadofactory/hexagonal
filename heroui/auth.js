@@ -15,7 +15,8 @@ const signupURL = process.env.NEXT_PUBLIC_SIGNUP_URL;
 const loginURL = process.env.NEXT_PUBLIC_LOGIN_URL;
 const logoutURL = process.env.NEXT_PUBLIC_LOGOUT_URL;
 
-const cookieName = process.env.NEXT_PUBLIC_COOKIE;
+const cookieToken = process.env.NEXT_PUBLIC_COOKIE_TOKEN;
+const cookieUser = process.env.NEXT_PUBLIC_COOKIE_USER;
 
 // Importamos el command del acceso al API
 import { command } from "./api";
@@ -38,7 +39,8 @@ function auth(url, credentials, setUser, setIsLoading, setError, redirect) {
   const setData = function(data) {
     const user = data.message.user;
     const token = data.message.token;
-    setCookie(token);
+    setCookie(cookieToken, token);
+    setCookie(cookieUser, user);
     setUser(user);
     redirect();
   }
@@ -47,21 +49,22 @@ function auth(url, credentials, setUser, setIsLoading, setError, redirect) {
 
 }
 
-function setCookie(cvalue) {
+function setCookie(cname, cvalue) {
   const d = new Date();
   d.setTime(d.getTime() + COOKIE_EXPIRATION);
   let expires = "expires="+d.toUTCString();
-  document.cookie = cookieName + "=" + cvalue + ";" + expires + ";path=/";
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 // Logout
 export function logout(setUser, redirect) {
-  deleteCookie();
+  deleteCookie(cookieToken);
+  deleteCookie(cookieUser);
   setUser(null);
   command(logoutURL, {}, redirect, function(){}, function(){});
 }
 
-function deleteCookie() {
+function deleteCookie(cname) {
   let expires = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
-  document.cookie = cookieName + "=;" + expires + ";path=/";
+  document.cookie = cname + "=;" + expires + ";path=/";
 }
