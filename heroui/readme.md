@@ -55,6 +55,12 @@
 ```
 
 
+## use user in navbar
+
+```javascript
+ const { user } = useGlobal();
+```
+
 ## Provider definition for user global. Last user signed
 
 ```javascript
@@ -88,12 +94,6 @@ export const useGlobal = () => {
   }
   return context;
 };
-```
-
-## use user in navbar
-
-```javascript
- const { user } = useGlobal();
 ```
 
 ## Proxy
