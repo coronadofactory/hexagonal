@@ -55,11 +55,11 @@
 ```
 
 
-## Provider definition for user global
+## Provider definition for user global. Last user signed
 
 ```javascript
 export function Providers({ children, themeProps }: ProvidersProps) {
-  const [user, setUser] = React.useState<string | null>(null);
+  const [user, setUser] = React.useState<string | null>(getUser());
   const router = useRouter();
 
   // Value to be provided by the Context

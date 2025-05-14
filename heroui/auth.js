@@ -21,6 +21,11 @@ const cookieUser = process.env.NEXT_PUBLIC_COOKIE_USER;
 // Importamos el command del acceso al API
 import { command } from "./api";
 
+// getUser
+export function getUser() {
+  return getCookie(cookieUser)?JSON.parse(getCookie(cookieUser)):null;
+}
+
 // Signup
 export function signup(credentials, setUser, setIsLoading, setError, redirect) {
   return auth(signupURL, credentials, setUser, setIsLoading, setError, redirect);
@@ -40,12 +45,29 @@ function auth(url, credentials, setUser, setIsLoading, setError, redirect) {
     const user = data.message.user;
     const token = data.message.token;
     setCookie(cookieToken, token);
-    setCookie(cookieUser, user);
+    setCookie(cookieUser, JSON.stringify(user));
     setUser(user);
     redirect();
   }
   
   command(url, credentials, setData, setIsLoading, setError);
+
+}
+
+// Obtencion de la cookie
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return null;
 
 }
 
