@@ -90,6 +90,12 @@ export const useGlobal = () => {
 };
 ```
 
+## use user in navbar
+
+```javascript
+ const { user } = useGlobal();
+```
+
 ## Proxy
 
 ### 1. Modificar next.config.js incluyendo:
