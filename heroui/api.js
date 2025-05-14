@@ -106,8 +106,8 @@ function setBearer(headers) {
 }
 
 // Obtencion de la cookie
-function getCookie() {
-  let name = cookieName + "=";
+function getCookie(cname) {
+  let name = cname + "=";
   let ca = document.cookie.split(';');
   for(let i = 0; i < ca.length; i++) {
     let c = ca[i];
