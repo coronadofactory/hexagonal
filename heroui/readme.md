@@ -52,9 +52,6 @@ export default function Cards() {
 }
 ```
 
-[View code](https://gist.github.com/coronadofactory/f253254caf1618729c06ade792c49d59)
-
-
 ### Configuration in `.env.local`:
 
     # API for proxy
