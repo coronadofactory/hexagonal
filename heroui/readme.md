@@ -3,8 +3,8 @@
 
 ### Master - Detail with modal
 
-https://gist.github.com/coronadofactory/f253254caf1618729c06ade792c49d59
 
+<script src="https://gist.github.com/coronadofactory/f253254caf1618729c06ade792c49d59.js"></script>
 ### Configuration in `.env.local`:
 
     # API for proxy
