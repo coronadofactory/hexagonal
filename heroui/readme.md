@@ -1,5 +1,11 @@
 # HERO IU
 
+> [!IMPORTANT]
+> Esto son solo pruebas de laboratorio
+
+
+- [x] Install Node
+- [ ] Install HeroUI
 
 ### Master - Detail with modal
 
