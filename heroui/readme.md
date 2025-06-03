@@ -1,15 +1,9 @@
 # HERO IU
 
 
-## API
+### Master - Detail with modal
 
-### Invocation
-
-```javascript
- useEffect(() => {
-    query('service', request, setData, isLoading, setError);
-  }, [request]);
-```
+https://gist.github.com/coronadofactory/f253254caf1618729c06ade792c49d59
 
 ### Configuration in `.env.local`:
 
