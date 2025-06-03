@@ -15,9 +15,9 @@ import { title } from "@/components/primitives";
 import { CardSkeleton } from "./skeleton";
 import { HorizontalCard } from "./card";
 
-import { useQuery } from "@/components/api-client";
+import { useQuery } from "@/hooks/api-client";
 import { ModalCrud } from "./modal";
-import { useModal} from '@/components/master-detail';
+import { useModal} from '@/hooks/master-detail';
 
 export default function Cards() {
 
