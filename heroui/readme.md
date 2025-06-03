@@ -9,6 +9,49 @@
 
 ### Master - Detail with modal
 
+```javascript
+'use client'
+import { title } from "@/components/primitives";
+import { CardSkeleton } from "./skeleton";
+import { HorizontalCard } from "./card";
+
+import { useQuery } from "@/components/api-client";
+import { ModalCrud } from "./modal";
+import { useModal} from '@/components/master-detail';
+
+export default function Cards() {
+
+  const {items, setItems, error, isLoading } = useQuery('cards');
+  const {item, method, setMethod, isOpen, onOpenChange, openUpdate, updateList} = useModal();
+
+  const updateListHandle = (item) => updateList(item, items, setItems);
+
+  return (
+    <div>
+      <h1 className={title()}>Cards</h1>
+
+      {isLoading && 
+         <CardSkeleton/>
+      }
+
+      {items &&
+         <HorizontalCard items={items} openUpdate={openUpdate} />
+      }
+        
+      <ModalCrud isOpen={isOpen} onOpenChange={onOpenChange} item={item} method={method} setMethod={setMethod} updateList={updateListHandle}/>
+
+      {error?.login ? (
+          <div><br/>Please login</div>
+      ) : error ? (
+          <div><br/>{error.message}</div>
+      ): null}
+
+    </div>
+
+  );
+}
+```
+
 [View code](https://gist.github.com/coronadofactory/f253254caf1618729c06ade792c49d59)
 
 
