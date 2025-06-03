@@ -9,8 +9,9 @@
 
 ### Master - Detail with modal
 
+[View code](https://gist.github.com/coronadofactory/f253254caf1618729c06ade792c49d59)
 
-<script src="https://gist.github.com/coronadofactory/f253254caf1618729c06ade792c49d59.js"></script>
+
 ### Configuration in `.env.local`:
 
     # API for proxy
