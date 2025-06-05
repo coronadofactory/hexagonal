@@ -7,6 +7,17 @@
 - [x] Install Node
 - [ ] Install HeroUI
 
+
+### User
+
+```javascript
+import { getUser } from "@/components/user";
+
+  const [user] = getUser();
+```
+
+
+
 ### Master - Detail with modal
 
 ```javascript
