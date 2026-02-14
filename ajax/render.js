@@ -1,11 +1,11 @@
 /*!
- * Fetcher Error
+ * Render
  * 
  * Copyright (c) 1984-2026 Jose Garcia
  * Released under the MIT license
  * https://raw.githubusercontent.com/coronadofactory/hexagonal/refs/heads/main/LICENSE.txt
  * 
- * Description: Render
+ * Description: Fetch + EJS + Dom
  * Date: 2026-02-14
 */
 
