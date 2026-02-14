@@ -12,38 +12,14 @@ Very simple ajax invocation using Appia
 
         <div id="table-container">Waiting for data...</div>
 
-        <script type="text/template" id="table-template">
-            <table border="1" cellpadding="5" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Desire</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% data.forEach(customer => { %>
-                        <tr>
-                            <td><%= customer.name %></td>
-                            <td><%= customer.desire %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        </script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ejs/3.1.9/ejs.min.js"></script>
         <script type="module">
-            import { Appia } from './appia.js';
+            import { Render } from './render.js';
+            const render = new Render('/api', 500, 'X-Appia-Bearer');
 
-            const appia = new Appia('/api', 500, 'X-Appia-Bearer');
-
-            window.addEventListener('DOMContentLoaded', () => {
-                const template = document.getElementById('table-template');
-                const container = document.getElementById('table-container');
-                appia.get('customers', {area:"madrid"})
-                    .then(data => container.innerHTML = ejs.render(template, { data }));
-                    .catch(err => container.innerHTML = err.message);
-            });
+            window.addEventListener('DOMContentLoaded'), render.handleInvocation(
+                'table-container', './template.ejs', 'customers', 'get', {area:"madrid"}, () => {}
+            );
         </script>
     </body>
 </html>

@@ -19,12 +19,8 @@ export class Appia {
         this.BEARER = BEARER;
     }
 
-    get(service, request) {
-        return fetchData(`${this.endpoint}/${service}`, request, "GET", DELAY, BEARER_NAME, this._getBearer());
-    }
-
-    post(service, fetchData) {
-        return fetchData(`${this.endpoint}/${service}`, request, "POST", this.DELAY, this.BEARER_NAME, this._getBearer());
+    fetch(service, method, request) {
+        return fetchData(`${this.endpoint}/${service}`, request, method, this.DELAY, this.BEARER_NAME, this._getBearer());
     }
 
     _getBearer() {
