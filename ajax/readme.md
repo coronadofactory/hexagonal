@@ -31,14 +31,6 @@
 
         </script>
 
-    <div id="render1">Waiting for data...</div>
-    <div id="render2">Waiting for data...</div>
-
-    <script type="text/template" id="render2-template">From template 2:<b><%= label %></b></script>
-
-
-
-
     </body>
 </html>
 ```
