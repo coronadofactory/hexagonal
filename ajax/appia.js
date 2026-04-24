@@ -7,10 +7,11 @@
  * 
  * Description: Normalización de accesos al API via ajax 
  * Date: 2026-02-14
-
+ * V2: 2026-02-24
+ * 
 */
 
-import { fetchData } from "./fetcher";
+import { fetchData } from "./fetcher-module.js";
 
 export class Appia {
     constructor(ENDPOINT, DELAY, BEARER) {
@@ -20,7 +21,7 @@ export class Appia {
     }
 
     fetch(service, method, request) {
-        return fetchData(`${this.endpoint}/${service}`, request, method, this.DELAY, this.BEARER_NAME, this._getBearer());
+        return fetchData(`${this.ENDPOINT}/${service}`, request, method, this.DELAY, this.BEARER_NAME, this._getBearer());
     }
 
     _getBearer() {

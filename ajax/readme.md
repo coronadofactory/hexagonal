@@ -1,4 +1,7 @@
-Very simple ajax invocation using Appia
+
+# Renderer
+
+### Very simple ajax invocation using Appia
 
 ```html
 <!DOCTYPE html>
@@ -14,13 +17,43 @@ Very simple ajax invocation using Appia
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ejs/3.1.9/ejs.min.js"></script>
         <script type="module">
-            import { Render } from './render.js';
-            const render = new Render('/api', 500, 'X-Appia-Bearer');
+
+            import { Appia } from "/ajax-api/appia.js";
+            import { Renderer } from "/ajax-api/renderer.js";
+
+            const DELAY = 3000, BEARER = 'X-Appia-Bearer';
+
+            const api = './', schema = 'schema', req = {};
 
             window.addEventListener('DOMContentLoaded'), render.handleInvocation(
-                'table-container', './template.ejs', 'customers', 'get', {area:"madrid"}, () => {}
+                new Renderer(schema, new Appia(api, DELAY, BEARER)).render(req)
             );
+
         </script>
+
+    <div id="render1">Waiting for data...</div>
+    <div id="render2">Waiting for data...</div>
+
+    <script type="text/template" id="render2-template">From template 2:<b><%= label %></b></script>
+
+
+
+
     </body>
 </html>
+```
+
+### The JSON Schema
+
+```json
+
+{
+    "type": "container",
+    "props": "",
+    "children": [
+        {"type":"ejs", "id":"table-container", "template":"./template.ejs", "props":{}}
+    ]
+}
+
+
 ```

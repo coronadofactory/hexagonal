@@ -1,31 +1,14 @@
 /*!
- * Fetcher Error
+ * Appia Errors
  * 
  * Copyright (c) 1984-2026 Jose Garcia
  * Released under the MIT license
  * https://raw.githubusercontent.com/coronadofactory/hexagonal/refs/heads/main/LICENSE.txt
  * 
- * Description: Mini Queue Manager
+ * Description: Errores de las llamada Appia 
  * Date: 2026-02-14
-
-    Permitidos al usuario (producción)
-
-    200 Ok
-    401 Need login
-    402 Payment required
-    408 Request timeout
-    422 User validation
-    423 Locked
-    500 Internal server error
-    502 Invalid gateway
-    503 Service breaker
-
-    Errores de desarrollo que el usuario recibe 500:
-    400 revisar si hay que mandarla
-    403 role incorrecto o errores de desarrollo. No debería haber llegado aquí o algún problema en desarrollo 
-    404 URI
-    405 Method
-    412 Precondition failed, falta idioma en cabecera 
+ * V2: 2026-02-24
+ * 
 */
 
 const ERROR_MESSAGE = 'La aplicación está dando un problema. Estamos trabajando en ello'
@@ -63,6 +46,9 @@ export function createError(response, contents) {
   class ApplicationError extends Error {
     constructor(status, message) {
       super(message);
+
+      console.log(status)
+      console.log(message)
       this.name = 'ApplicationError';
       this.status = status;
       this.error=ERROR_MESSAGE;
