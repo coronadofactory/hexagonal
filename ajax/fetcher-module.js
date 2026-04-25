@@ -13,7 +13,7 @@
 
 import { createError } from "./error-module.js";
 
-export async function fetchData(endpoint, request, method, BEARER_NAME, bearer) {
+export async function fetchData(endpoint, request, method, DELAY, BEARER_NAME, bearer) {
 
   // Options
   let options = {method:method, headers:AJAX}
@@ -39,7 +39,16 @@ export async function fetchData(endpoint, request, method, BEARER_NAME, bearer) 
       return contents;
     })
   
-  return p1;
+  // Promise of first waiting
+  const p2 = new Promise((resolve) => {
+    setTimeout(resolve, DELAY || 0);
+  });
+
+  return new Promise((resolve, reject) => {
+    Promise.all([p1, p2])
+      .then(response => resolve(response[0]))
+      .catch(err => reject(err))
+  });
   
 }
 
