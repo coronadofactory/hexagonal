@@ -21,12 +21,10 @@
             import { Appia } from "/ajax-api/appia.js";
             import { Renderer } from "/ajax-api/renderer.js";
 
-            const DELAY = 3000, BEARER = 'X-Appia-Bearer';
-
             const api = './', schema = 'schema', req = {};
 
             window.addEventListener('DOMContentLoaded', (e) =>
-                new Renderer(schema, new Appia(api, DELAY, BEARER)).render(req)
+                new Renderer(schema, new Appia(api)).render(req)
             );
 
         </script>

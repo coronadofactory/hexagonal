@@ -25,6 +25,7 @@ export class Appia {
     }
 
     _getBearer() {
+        if (!this.BEARER) return null;
         return this._getCookie(this.BEARER);
     }
 
