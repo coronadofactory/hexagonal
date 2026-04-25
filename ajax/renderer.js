@@ -32,7 +32,7 @@ export class Renderer {
                         return prev.then(() => {
                             if (!item1.fetch) return items2.push(item1);
                             const { url, method, req, property } = item1.fetch;
-                            appia.fetch(url, method, req)
+                            return appia.fetch(url, method, req)
                                 .then(props => {
                                     const item2 = {...item1, props: {...item1.props, [property]:props}};
                                     delete item2.fetch;
