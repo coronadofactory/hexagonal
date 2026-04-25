@@ -24,7 +24,7 @@
             const api = './', schema = 'schema', req = {};
 
             window.addEventListener('DOMContentLoaded', (e) =>
-                new Renderer(schema, new Appia(api)).render(req)
+                new Renderer(schema, new Appia(api)).render(req).catch(err=>alert(err.message))
             );
 
         </script>

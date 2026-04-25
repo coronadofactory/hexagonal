@@ -21,11 +21,27 @@ export class Renderer {
 
     render(req) {
 
-        return this._readSchema(this.schemaService, req, this.appia)
+        const appia = this.appia;
+        const items2 = [];
+
+        return this._readSchema(this.schemaService, req, appia)
             .then(schema => Promise.all(
                 schema.children
                     .filter(el => el.type === 'ejs')
-                    .map(el => this._renderTemplate(el.id, el.template, el.props))
+                    .reduce((prev, item1) => {
+                        return prev.then(() => {
+                            if (!item1.fetch) return items2.push(item1);
+                            const { url, method, req, property } = item1.fetch;
+                            appia.fetch(url, method, req)
+                                .then(props => {
+                                    const item2 = {...item1, props: {...item1.props, [property]:props}};
+                                    delete item2.get;
+                                    items2.push(item2);
+                                })
+                            }
+                        );
+                    }, Promise.resolve())
+                    .then(() => items2.map(el => this._renderTemplate(el.id, el.template, el.props)))
             ));
 
     }
@@ -47,7 +63,6 @@ export class Renderer {
     }
 
     async _loadTemplate(url) {
-
         if (this.cache[url]) {
             return Promise.resolve(this.cache[url]);
         } else if (url.startsWith('#')) {
