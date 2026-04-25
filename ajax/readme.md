@@ -25,7 +25,7 @@
 
             const api = './', schema = 'schema', req = {};
 
-            window.addEventListener('DOMContentLoaded'), render.handleInvocation(
+            window.addEventListener('DOMContentLoaded', (e) =>
                 new Renderer(schema, new Appia(api, DELAY, BEARER)).render(req)
             );
 
