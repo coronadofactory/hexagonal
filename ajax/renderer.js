@@ -13,15 +13,17 @@
 
 export class Renderer {
 
-    constructor(schemaService, appia) {
+    constructor(schemaService, appia, appia2) {
         this.schemaService=schemaService;
         this.appia=appia;
+        this.appia2=appia2;
         this.cache={};
     }
 
     render(req) {
 
         const appia = this.appia;
+        const appia2 = this.appia2 || this.appia;
         const items2 = [];
 
         return this._readSchema(this.schemaService, req, appia)
@@ -32,7 +34,7 @@ export class Renderer {
                         return prev.then(() => {
                             if (!item1.fetch) return items2.push(item1);
                             const { url, method, req, property } = item1.fetch;
-                            return appia.fetch(url, method, req)
+                            return appia2.fetch(url, method, req)
                                 .then(props => {
                                     const item2 = {...item1, props: {...item1.props, [property]:props}};
                                     delete item2.fetch;
@@ -41,7 +43,7 @@ export class Renderer {
                             }
                         );
                     }, Promise.resolve())
-                    .then(() => items2.map(el => this._renderTemplate(el.id, el.template, el.props)))
+                    .then(() => items2.map(el => this._renderTemplate(el.id, el.template, el.props, el.display)))
             ));
 
     }
@@ -49,16 +51,16 @@ export class Renderer {
     // Read schema
     _readSchema(schemaService, req, appia) {
 
-        if (!schemaService) throw new Error('Bad request')
+        if (!schemaService) throw new Error('No schemaService defined')
         return appia.fetch(schemaService, "GET", req);
 
     }
 
     // Load template & render
-    async _renderTemplate(id, template, payload) {
+    async _renderTemplate(id, template, payload, display) {
 
         return this._loadTemplate(template)
-            .then(template => this._assign(id, ejs.render(template, payload)))
+            .then(template => this._assign(id, ejs.render(template, payload), display))
 
     }
 
@@ -89,7 +91,7 @@ export class Renderer {
 
     }
 
-    _assign(id, value) {
+    _assign(id, value, display) {
         const container = document.getElementById(id);
         container.innerHTML = value;
     }
@@ -99,5 +101,25 @@ export class Renderer {
 function unescapeHTML(value) {
     const container = document.createElement("textarea");
     container.innerHTML = value;
-    return container.value;
+    return convertTemplate(container.value);
+}
+
+function convertTemplate(input) {
+    return convertAllPrints(convertAllMaps(input));
+}
+
+function convertAllMaps(input) {
+    return input.replace(
+        /<ejsmap\s+items="([^"]+)"\s+item="([^"]+)"[^>]*>([\s\S]*?)<\/ejsmap>/g,
+        (_, items, item, inner) => {
+        return `<% ${items}.map((${item}) => { %>\n${inner}\n<% }); %>`;
+        }
+    );
+}
+
+function convertAllPrints(input) {
+    return input.replace(
+        /<ejsprint\s+value="([^"]+)"[^>]*><\/ejsprint>/g,
+        (_, value) => `<%= ${value} %>`
+    );
 }
