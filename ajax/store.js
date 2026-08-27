@@ -1,20 +1,57 @@
 /*!
- * Renderer
+ * Store manager
  * 
  * Copyright (c) 1984-2026 Jose Garcia
  * Released under the MIT license
  * https://raw.githubusercontent.com/coronadofactory/hexagonal/refs/heads/main/LICENSE.txt
  * 
- * Description: EJS + Dom
- * Date: 2026-02-14
- * V2: 2026-02-24
- * V3: 2026-08-27
+ * Description: Carga el almacén de datos en el schema 
+ * Date: 2026-08-27
  * 
 */
 
+export async function fill(schema, store) {
+
+    if (!store) return Promise.resolve(schema);
+
+    return store.then(store => ({...schema, children:children(schema.children, store)}))
+
+}
+
+function children(children, store) {
+
+    return children.map(schema => ({...schema, props:props(schema, store)}))
+
+}
+
+function props(schema, store) {
+
+    return {
+        ...(schema.props ?? {}),
+        ...(store[schema.store] ?? {}),
+        ...(schema.stores?.reduce(
+                (acc, storeId) => {
+                    Object.assign(acc, store[storeId] ?? {});
+                    return acc;
+                }, {}) ?? {}
+            ),
+      };
+
+}
+
+export async function render(schema) {
+
+    return Promise.all(
+        schema.children
+            .filter(el => el.template)
+            .map(el => renderTemplate(el.id, el.template, el.props || {}))
+    ).then(() => schema) // Para el siguiente .then (hidration)
+
+}
+
 let cache = {};
 
-export async function render(id, template, payload) {
+async function renderTemplate(id, template, payload) {
 
     return loadTemplate(template)
         .then(template => {
@@ -180,5 +217,18 @@ function convertAllLinks(input) {
         return `<a href="<%= ${href} %>" class="${className}">${inner}</a>`;
         }
     );
+
+}
+
+export async function hidrate(schema, hidrate) {
+ 
+    const id = schema.children
+        .find(el => el.template && el.id)?.id
+
+    document.getElementById(id)
+        ?.querySelectorAll('[data-handler]')
+        .forEach(el => hidrate(el.getAttribute('data-handler'), el));        
+
+    return Promise.resolve()
 
 }
