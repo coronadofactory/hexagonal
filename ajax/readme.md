@@ -1,14 +1,14 @@
 
 # Renderer
 
-### Very simple ajax invocation using Appia
+### Very simple ajax invocation
 
 ```html
 <!DOCTYPE html>
 <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>Example using Appia</title>
+        <title>Example</title>
     </head>
     <body>
         <h1>Table Sample</h1>
@@ -18,8 +18,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ejs/3.1.9/ejs.min.js"></script>
         <script type="module">
 
-            import { Appia } from "/ajax-api/appia.js";
-            import { Renderer } from "/ajax-api/renderer.js";
+            import Controller from "./infrastructure/genui.js";
 
             const api = '.', schema = 'schema.json', req = {};
 
