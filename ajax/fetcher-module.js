@@ -8,16 +8,17 @@
  * Description: Normalización de accesos al API via ajax 
  * Date: 2026-02-14
  * V2: 2026-02-24
- * 
+ * V3: 2026-08-28 Option headers
 */
 
 import { createError } from "./error-module.js";
 
-export async function fetchData(endpoint, request, method, DELAY, BEARER_NAME, bearer) {
+export async function fetchData(endpoint, request, method, DELAY, BEARER_NAME, bearer, optionsHeader) {
 
   // Options
   let options = {method:method, headers:AJAX}
   if (BEARER_NAME && bearer) options.headers[BEARER_NAME]=`Bearer ${bearer}`;
+  if (optionsHeader) if (optionsHeader) options.headers = { ...options.headers, ...optionsHeader };
 
   // Final URL & body
   let url;
