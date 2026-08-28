@@ -42,23 +42,21 @@ export class Controller {
         return this;
     }
 
-    async run(error) {
+    async run() {
 
-        const schemaFetcher = this.schemaFetcher?this.schemaFetcher:Promise.resolve();
+        const schemaFetcher = this.schemaFetcher?this.schemaFetcher:Promise.resolve({children:[]});
         const APIFetcher = this.APIFetcher;
         const hidrant = this.hidrant;
 
-        return new Promise((resolve) => {
-            document.addEventListener('DOMContentLoaded', () => {
-                if (this.onlineEvent) window.addEventListener('online', this.onlineEvent);
-                if (this.offlineEvent) window.addEventListener('offline', this.offlineEvent);
-                resolve(schemaFetcher
-                    .then(schema => fill(schema, APIFetcher))
-                    .then(schema => Promise.all(schema.children.filter(el => el.template).map(el => render(el.id, el.template, el.props || {}))))
-                    .then(() => Promise.all([...el?.querySelectorAll('[data-hidrant]')].map(el => hidrate(el, hidrant))).then(() => this.hidratedEvent?.()))
-                    .catch(err => error?error(e):console.error(err))
-                )
-            })
+        return new Promise((resolve,reject) => {
+            if (this.onlineEvent) window.addEventListener('online', this.onlineEvent);
+            if (this.offlineEvent) window.addEventListener('offline', this.offlineEvent);
+            schemaFetcher
+                .then(schema => fill(schema, APIFetcher))
+                .then(schema => Promise.all(schema.children.filter(el => el.template).map(el => render(el.id, el.template, el.props || {}))))
+                .then(() => Promise.all(Array.from(document.querySelectorAll('[data-hidrant]')).map(el => hidrate(el, hidrant))).then(() => this.hidratedEvent?.()))
+                .then(() => resolve())
+                .catch(err => reject(err))
         })
             
     }

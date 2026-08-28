@@ -8,20 +8,21 @@
  * Description: Normalización de accesos al API via ajax 
  * Date: 2026-02-14
  * V2: 2026-02-24
- * 
+ * V3: 2026-08-28 Add headers
 */
 
 import { fetchData } from "./fetcher-module.js";
 
 export class Appia {
-    constructor(ENDPOINT, DELAY, BEARER) {
+    constructor(ENDPOINT, DELAY, BEARER, HEADERS) {
         this.ENDPOINT=ENDPOINT;
         this.DELAY = DELAY;
         this.BEARER = BEARER;
+        this.HEADERS = HEADERS;
     }
 
     fetch(service, method, request) {
-        return fetchData(`${this.ENDPOINT}/${service}`, request, method, this.DELAY, this.BEARER_NAME, this._getBearer());
+        return fetchData(`${this.ENDPOINT}/${service}`, request, method, this.DELAY, this.BEARER, this._getBearer(), this.HEADERS);
     }
 
     _getBearer() {
