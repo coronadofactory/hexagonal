@@ -21,10 +21,13 @@
             import { Appia } from "/ajax-api/appia.js";
             import { Renderer } from "/ajax-api/renderer.js";
 
-            const api = '.', schema = 'schema', req = {};
+            const api = '.', schema = 'schema.json', req = {};
 
             window.addEventListener('DOMContentLoaded', (e) =>
-                new Renderer(schema, new Appia(api)).render(req).catch(err => alert(err.message))
+                new Controller()
+                    .schema(fetch(`${api}/${schema}`, "GET", req))
+                    .run();
+                    .catch(err => alert(err.message))
             );
 
         </script>
