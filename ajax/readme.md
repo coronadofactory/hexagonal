@@ -18,7 +18,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ejs/3.1.9/ejs.min.js"></script>
         <script type="module">
 
-            import Controller from "./infrastructure/genui.js";
+            import Controller from "https://cdn.jsdelivr.net/gh/coronadofactory/hexagonal@main/ajax/genui.js";
 
             const api = '.', schema = 'schema.json', req = {};
 
