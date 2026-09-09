@@ -53,17 +53,9 @@ export class Controller {
             if (this.offlineEvent) window.addEventListener('offline', this.offlineEvent);
 
             Promise.all([schemaFetcher, storeFetcher])
-                .then(([schema, store]) => {
-                    return schema;
-                })
-                .then(schema => {
-                    schema.children.filter(el => el.template && el.id).forEach(el => render(el.id, el.template, el.props || {}))
-                    return schema;
-                })
-                .then(schema => {
-                    schema.children.filter(el => el.hidrant && el.id).forEach(el => hidrate(document.getElementById(el.id), hidrant, el.hidrant))
-                    return schema;
-                })
+                .then(([schema, store]) => fillSchema(schema, store))
+                .then(schema => renderSchema(schema))
+                .then(schema => hidrateSchema(schema, hidrant))
                 .then(schema => resolve(schema))
                 .catch(err => reject(err))
         })
@@ -74,9 +66,32 @@ export class Controller {
 
 import { render } from "./renderer.js";
 
-async function hidrate(el, hidrate, hidrateName) {
-    if (!hidrate) return Promise.reject('No hidrant defined');
-    return Promise.resolve(hidrate(hidrateName, el))
+function fillSchema(schema, store) {
+  return {
+    ...schema, children: schema.children.map(child => {
+      if (!child.store) return child;
+      return fillProps(child, store)
+    }) 
+  };
+}
+
+function fillProps(child, store) {
+  const props = {};
+  child.store.split(',').map(key => key.trim()).filter(Boolean).forEach(key => {
+    if (store[key]) props[key] = store[key];
+  })
+  const { store: _, ...childWithoutStore } = child;
+  return {...childWithoutStore, props}
+}
+
+function renderSchema(schema) {
+  schema.children.filter(el => el.template && el.id).forEach(el => render(el.id, el.template, el.props || {}))
+  return schema;
+}
+
+function hidrateSchema(schema, hidrate) {
+  schema.children.filter(el => el.hidrant && el.id).forEach(el => hidrate(el.hidrant, document.getElementById(el.id)))
+  return schema;
 }
 
 export default Controller;
