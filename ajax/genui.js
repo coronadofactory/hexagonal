@@ -90,7 +90,7 @@ function renderSchema(schema) {
 }
 
 function hidrateSchema(schema, hidrate) {
-  schema.children.filter(el => el.hidrant && el.id).forEach(el => hidrate(el.hidrant, document.getElementById(el.id)))
+  schema.children.filter(el => el.hidrant && el.id && document.getElementById(el.id)).forEach(el => hidrate(el.hidrant, document.getElementById(el.id)))
   return schema;
 }
 
